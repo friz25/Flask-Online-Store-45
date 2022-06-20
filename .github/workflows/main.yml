@@ -34,6 +34,12 @@ jobs:
       - name: List current folder
         run: ls -la
         
+      - name: git clone my repo
+        uses: actions/checkout@v1 
+        
+      - name: List current folder
+        run: ls -la
+         
       - name: Run a multi-line script
         run: |
           echo "Add other actions to build,"
@@ -48,5 +54,11 @@ jobs:
         
       - name: Deployment Package
         run: echo "Deployment package name is ${{ env.DEPLOY_PACKAGE_NAME }}"
+        
+      - name: Lets test some packages if they are here 1
+        run: aws --version
+        
+      - name: Lets test some packages if they are here 2
+        run: zip        
        
   
