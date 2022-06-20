@@ -1,2 +1,1 @@
 flask~=2.0.0
-cloudipsp~=1.0.0
