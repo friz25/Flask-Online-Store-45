@@ -31,6 +31,9 @@ jobs:
       - name: Print Hello Message in Testing Job
         run: echo "Hello, world from Testing Job!"
         
+      - name: List current folder
+        run: ls -la
+        
       - name: Run a multi-line script
         run: |
           echo "Add other actions to build,"
