@@ -10,3 +10,4 @@ Status of last Deployment:<br>
 ## Payments page (provided by cloudipsp)
 
 ![Logo](https://i.ibb.co/SJNs1BT/Fondy-payment-gateway-Google-Chrome.jpg)
+<br>
