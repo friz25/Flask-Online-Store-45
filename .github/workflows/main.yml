@@ -40,7 +40,8 @@ jobs:
           echo test, and deploy your project.
   my_deploy:
     runs-on: ubuntu-latest
+    steps:
       - name: Print Hello Message
-       run: echo "Hello, world from Deploy Job!"
+        run: echo "Hello, world from Deploy Job!"
        
   
