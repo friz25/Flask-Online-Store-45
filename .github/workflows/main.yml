@@ -33,5 +33,31 @@ jobs:
       - name: Copy deployment package to S3 Bucket
         run: aws s3 cp ${{ env.DEPLOY_PACKAGE_NAME }} s3://${{ env.EB_PACKAGE_S3_PACKAGE_NAME }}/
 
-      - name: Print Happy Message
+      - name: Print Happy Message for CI finish
         run: echo "CI Pipeline part finished SUCCESSFULY"
+
+  my_cd_part:
+    runs-on: ubuntu-latest
+    needs: [my_ci_part]
+    steps:
+      - name: Configure my AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id : "${{ secrets.MY_AWS_ACCESS_KEY }}"
+          aws-secret-access-key : "${{ secrets.MY_AWS_SECRET_KEY }}"
+          aws-region : "${{ env.AWS_PACKAGE_NAME }}"
+
+      # Создаёт новый ElasticBeanstalk Application
+      - name: Create new ElasticBeanstalk Application
+        run: |
+          aws elasticbeanstalk create-application-version \
+          --application-name ${{ env.EB_APPLICATION_NAME }} \
+          --source-bundle s3Bucket="${{ env.EB_PACKAGE_S3_PACKAGE_NAME }}",S3Key= "${{ env.DEPLOY_PACKAGE_NAME }}"\
+          --version-label "Ver-${{ github.sha }}" \
+          --description "CommitSHA-${{ github.sha }}"
+      # Диплоим S3 в вышесозданный Application
+      - name: Deploy new ElasticBeanstalk Application Version
+        run: aws elasticbeanstalk update-environment --environment-name ${{ env.EB_ENVIRONMENT_NAME }} --version-label "Ver-${{ github.sha }}"
+
+      - name: Print Happy Message for CD finish
+        run: echo "CD Pipeline part finished SUCCESSFULY"
